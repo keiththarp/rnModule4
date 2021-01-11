@@ -33,7 +33,11 @@ const StartScreen = (props) => {
   let confirmedOutput;
 
   if (confirmed) {
-    confirmedOutput = <Text>{`Your chosen Number is ${selectedNumber}`} </Text>
+    confirmedOutput =
+      <Card style={styles.confirmationBlock}>
+        <Text>{`Your chosen Number is ${selectedNumber}`} </Text>
+        <Button title="Begin" onPress={() => { }} />
+      </Card>
   }
 
   return (
@@ -92,6 +96,10 @@ const styles = StyleSheet.create({
   input: {
     width: 85,
     textAlign: 'center',
+  },
+  confirmationBlock: {
+    marginTop: 35,
+    width: 300
   }
 });
 
