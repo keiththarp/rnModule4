@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
@@ -15,18 +15,27 @@ const StartScreen = (props) => {
   };
 
   const clearInputHandler = () => {
-    const chosenNumber = parseInt(enteredValue);
-    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
-      return;
-    }
     setEnteredValue('')
-    setSelectedNumber(chosenNumber);
     setConfirmed(false);
   }
 
   const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert('There was an error', 'Number between 1 - 99', [{ text: 'Okay', style: 'destructive', onPress: clearInputHandler }])
+      return;
+    }
     setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('')
   }
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = <Text>{`Your chosen Number is ${selectedNumber}`} </Text>
+  }
+
   return (
     <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
       <View style={styles.screen}>
@@ -50,6 +59,7 @@ const StartScreen = (props) => {
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   )
