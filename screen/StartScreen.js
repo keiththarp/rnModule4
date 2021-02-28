@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Ale
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
+import NumberContainer from '../components/numberContainer';
 
 const StartScreen = (props) => {
 
@@ -28,6 +29,7 @@ const StartScreen = (props) => {
     setConfirmed(true);
     setSelectedNumber(chosenNumber);
     setEnteredValue('')
+    Keyboard.dismiss();
   }
 
   let confirmedOutput;
@@ -35,8 +37,9 @@ const StartScreen = (props) => {
   if (confirmed) {
     confirmedOutput =
       <Card style={styles.confirmationBlock}>
-        <Text>{`Your chosen Number is ${selectedNumber}`} </Text>
-        <Button title="Begin" onPress={() => { }} />
+        <Text>Your chosen Number is </Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="BEGIN" onPress={() => { }} />
       </Card>
   }
 
@@ -49,6 +52,8 @@ const StartScreen = (props) => {
           <Input
             style={styles.input}
             blurOnSubmit
+            autoCapitalize='none'
+            autoCorrect={false}
             keyboardType='number-pad'
             maxLength={2}
             onChangeText={numberInputHandler}
@@ -99,7 +104,8 @@ const styles = StyleSheet.create({
   },
   confirmationBlock: {
     marginTop: 35,
-    width: 300
+    width: 300,
+    alignItems: 'center'
   }
 });
 
